@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
     printf("enter number of vertices: ");
     scanf("%d", &n);
 
-    printf("enter adj matrix: ");
+    printf("enter adj matrix:\n");
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
