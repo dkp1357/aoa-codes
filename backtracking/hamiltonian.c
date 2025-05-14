@@ -1,65 +1,64 @@
-// incomplete
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_NODES 100
+#define MAX 100
 
-int adj[MAX_NODES][MAX_NODES];
+int path[MAX];
+int adj[MAX][MAX];
+int n;
 
-int validNext(int next, int k, int x[], int n)
-{
-    // Check if the vertex has already been used
-    for (int i = 0; i < k; i++)
-    {
-        if (x[i] == next)
+int isValid(int v, int k) {
+    // Check if this vertex `v` is adjacent to the previous vertex `path[k-1]` 
+    if (adj[path[k - 1]][v] == 0)
+        return 0;
+
+    // Check if the vertex has already been included
+    for (int i = 0; i < k; i++) {
+        if (path[i] == v)
             return 0;
     }
 
-    
-    if (k == n - 1 && adj[next][x[0]] == 0)
-        return 0;
+    return 1;
 }
 
-void hamiltonian(int k, int x[], int n)
-{
-    if (k == n)
-    {
-        printf("\n");
-        for (int i = 0; i < n; i++)
-        {
-            printf("%d ", x[i]);
+void printCycle() {
+    for (int i = 0; i < n; i++)
+        printf("%d ", path[i]);
+    printf("%d\n", path[0]); // to show cycle back to the first vertex
+}
+
+void hamiltonianCycle(int k) {
+    if (k == n) {
+        // if the last vertex (path[n-1]) is connected to the first
+        // path[0] = 0, since we are starting from vertex 0
+        if (adj[path[k - 1]][path[0]] == 1) {
+            printCycle();
         }
         return;
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        if (validNext(i, k, x, n))
-        {
-            x[k] = i;
-            hamiltonian(k+1, x, n);
+    for (int v = 1; v < n; v++) {
+        if (isValid(v, k)) {
+            path[k] = v;
+            hamiltonianCycle(k + 1);
         }
     }
-    
 }
 
-int main()
-{
-    int n;
-    printf("Enter the number of vertices: ");
+int main() {
+    printf("Enter number of vertices: ");
     scanf("%d", &n);
 
-    printf("Enter the adjacency matrix:\n");
+    printf("Enter adjacency matrix:\n");
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             scanf("%d", &adj[i][j]);
 
-    printf("\nValid Cycles:\n");
+    // Start from vertex 0
+    path[0] = 0;
 
-    int x[n];
-    x[0] = 0;
-    hamiltonian(1, x, n);
+    printf("Hamiltonian Cycles:\n");
+    hamiltonianCycle(1);
 
     return 0;
 }
