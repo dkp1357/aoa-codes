@@ -14,7 +14,7 @@ int main()
 	scanf("%d", &n);
 
 	struct item items[n];
-
+	
 	// struct item* items = NULL;
     // items = (struct item*)malloc(sizeof(struct item) * n); 
 
@@ -54,6 +54,9 @@ int main()
 			}
 		}
 	}
+
+	// store ratio
+	int ratio[n];
 
 	// apply fractional knapsack
 	double totalProfit = 0.0;

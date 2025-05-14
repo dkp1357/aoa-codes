@@ -61,7 +61,7 @@ void kruskal(Edge edges[], int E, int V)
     {
         if (used[i])
         {
-            printf("Edge %d->%d, Weight: %d\n", edges[i].u, edges[i].v, edges[i].cost);
+            printf("Edge %d->%d, cost: %d\n", edges[i].u, edges[i].v, edges[i].cost);
             total_cost += edges[i].cost;
         }
     }
